@@ -1,6 +1,7 @@
 repeat wait() until game:IsLoaded() and game.Players and game.Players.LocalPlayer and game.Players.LocalPlayer.Character
 
 local plot
+local auto
 local plr = game:GetService("Players").LocalPlayer
 local vu = game:GetService("VirtualUser")
 local h = plr.Character.HumanoidRootPart
@@ -20,15 +21,7 @@ local Ctab = win:Tab('Credit')
 
 maintab:Toggle('Auto Farm', function(a)
     print(a)
-    if a then       
-            for i, v in pairs(game.Workspace.Plots[tostring(plr.Plot.Value)].Roaches:GetChildren()) do
-            wait(0.1)
-            h.CFrame = v.CFrame
-            vu:ClickButton1(Vector2.zero, workspace.CurrentCamera.CFrame)
-            end
-            game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Upload"):FireServer()
-        task.wait(0.2)
-    end
+    auto = a
 end)
 
 maintab:Button('Auto Obby', function(v)
@@ -52,5 +45,17 @@ end)
 uitab:Button('Destroy GUI', function()
     win:Exit()
 end)
+
+while true do
+    if auto == true then
+        for i, v in pairs(game.Workspace.Plots[tostring(plr.Plot.Value)].Roaches:GetChildren()) do
+            wait(0.1)
+            h.CFrame = v.CFrame
+            vu:ClickButton1(Vector2.zero, workspace.CurrentCamera.CFrame)
+        end
+        game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("Upload"):FireServer()
+    end
+    task.wait(0.2)
+end
 
 Ctab:Label('Made by White#0606 & Pukao#0001')
